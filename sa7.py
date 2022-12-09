@@ -1,5 +1,12 @@
 aviao = []
-
+passageiros = {}
+def avioesdisponiveis():
+    disponiveis = []
+    chaves = list(avioes)
+    for i in range(len(avioes)):
+        if avioes[chaves[i]] > 0:
+            disponiveis.append(chaves[i])
+    return disponiveis
 def escolha():
     print ("escolha uma opcao:")
     print("opcao[1] - Registrar o numero do aviao: ")
@@ -14,7 +21,7 @@ def escolha():
 def opcao1():
     avioes = {}
     for i in range (4):
-        numero = int(input("digite o numero dos avioe:\n"))
+        numero = int(input("digite o numero dos aviões:\n"))
         avioes[numero] = 0
     return avioes
 
@@ -28,8 +35,7 @@ def opcao2(avioes):
 
 
 def opcao3(avioes):
-    disponiveis = avioesdisponiveis()
-    print(f"avioes disponiveis sao: {disponiveis}")
+    print(f"avioes disponiveis sao: {avioesdisponiveis()}")
     numero = int(input("digite o numero do aviao:\n"))
     print(f"esse avião tem {avioes[numero]} passagem disponiveis")
     nome = input("digite o nome do passageiro:\n")
@@ -38,13 +44,24 @@ def opcao3(avioes):
             print("não há reservas para esse avião")
         else:
             quantidade = int(input("quantas passagens serao reservadas:\n"))
+            if nome not in passageiros:
+                passageiros[nome] = 0
             if avioes[numero] - quantidade >= 0:
                 avioes[numero] -= quantidade
-                passageiros = {nome: f"aviao numero {numero} ,tem {quantidade} de reservas"}
+                passageiros[nome] += quantidade
             else:
                 print("você está tentando reservar mais aviões do que tem disponivel")
     except:
         raise KeyError("essa avião não existe")
+
+def opcao4():
+    print(f"avioes disponiveis sao: {avioesdisponiveis()}")
+    numero = int(input("digite o numero do aviao:\n"))
+    print(f"esse avião tem {avioes[numero]} passagem disponiveis")
+
+def opcao5():
+    nome = input("digite o nome do passageiro:\n")
+    print(f"esse passageiro tem {passageiros[nome]} passagem reservadas")
 
 
 opcao_escolhida = escolha()
@@ -58,15 +75,15 @@ while opcao_escolhida != 6:
         print(avioes)
         opcao_escolhida = escolha()
     elif opcao_escolhida == 3:
+        opcao3(avioes)
+        opcao_escolhida = escolha()
+    elif opcao_escolhida == 4:
+        opcao4()
+        opcao_escolhida = escolha()
+    elif opcao_escolhida == 5:
+        opcao5()
+        opcao_escolhida = escolha()
+print("fechando o programa")
 
 
 
-
-
-def avioesdisponiveis():
-    disponiveis = []
-    chaves = list(avioes)
-    for i in range(len(avioes)):
-        if avioes[chaves[i]] > 0:
-            disponiveis.append(chaves[i])
-    return disponiveis
